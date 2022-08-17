@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 @WebServlet("/saveServlet")
 public class SaveServlet extends HttpServlet {
@@ -19,20 +20,27 @@ public class SaveServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String country = request.getParameter("country");
+        String brand = request.getParameter("brand");
+        String model = request.getParameter("model");
+        String producingCountry = request.getParameter("producingCountry");
+        String bodyType = request.getParameter("bodyType");
 
-        Employee employee = new Employee();
+        Car car = new Car();
 
-        employee.setName(name);
-        employee.setEmail(email);
-        employee.setCountry(country);
+        car.setBrand(brand);
+        car.setModel(model);
+        car.setProducingCountry(producingCountry);
+        car.setBodyType(bodyType);
 
-        //out.println(employee.toString());
-        //out.println(EmployeeRepository.getConnection());
+        //out.println(car.toString());
+        //out.println(CarRepository.getConnection());
 
-        int status = EmployeeRepository.save(employee);
+        int status = 0;
+        try {
+            status = CarRepository.save(car);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         //out.println(status);
 
         if (status > 0) {

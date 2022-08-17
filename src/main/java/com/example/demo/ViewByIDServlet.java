@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 
 @WebServlet("/viewByIDServlet")
@@ -18,9 +19,14 @@ public class ViewByIDServlet extends HttpServlet {
         String sid = request.getParameter("id");
         int id = Integer.parseInt(sid);
 
-        Employee employee = EmployeeRepository.getEmployeeById(id);
+        Car car = null;
+        try {
+            car = CarRepository.getCarById(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-        out.print(employee);
+        out.print(car);
         out.close();
     }
 }
