@@ -120,6 +120,32 @@ public class CarRepository {
         log.info("delete() - end = {}", status);
         return status;
     }
+
+    @Logged
+    public static int isDeleted(int id) throws SQLException {
+
+        int status = 0;
+
+        Connection connection = null;
+        try {
+            log.info("Start isDeleted() = {}", id);
+            connection = CarRepository.getConnection();
+            PreparedStatement ps = connection.prepareStatement("UPDATE wheels " +
+                                                                   "SET isdeleted = true" +
+                                                                   "WHERE id = ?\n");
+            ps.setInt(1, id);
+            status = ps.executeUpdate();
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            assert connection != null;
+            connection.close();
+        }
+        log.info("isDeleted() - end = {}", status);
+        return status;
+    }
+
     @Logged
     public static Car getCarById(int id) throws SQLException {
 
