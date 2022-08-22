@@ -24,7 +24,7 @@ public class SaveServlet extends HttpServlet {
         String model = request.getParameter("model");
         String producingCountry = request.getParameter("producingCountry");
         String bodyType = request.getParameter("bodyType");
-        String isElectricCar = request.getParameter("isElectricCar");
+        String isElectricCar = request.getParameter("isDeletedCar");
 
         Car car = new Car();
 
@@ -32,7 +32,7 @@ public class SaveServlet extends HttpServlet {
         car.setModel(model);
         car.setProducingCountry(producingCountry);
         car.setBodyType(bodyType);
-        car.setIsElectricCar(Boolean.valueOf(isElectricCar));
+        car.setIsDeletedCar(Boolean.valueOf(isElectricCar));
 
         //out.println(car.toString());
         //out.println(CarRepository.getConnection());
