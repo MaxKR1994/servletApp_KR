@@ -201,13 +201,14 @@ public class CarRepository {
         return listCars;
     }
 
+    @Logged
     public static List<Car> getAllAvailableCars() throws SQLException {
 
         List<Car> listCars = new ArrayList<>();
 
         Connection connection = null;
         try {
-            //log.info("getAllAvailableCars() - start");
+            log.info("getAllAvailableCars() - start");
             connection = CarRepository.getConnection();
             PreparedStatement ps = connection.prepareStatement("select * from wheels WHERE isdeletedcar = FALSE");
             ResultSet rs = ps.executeQuery();
@@ -231,7 +232,7 @@ public class CarRepository {
             assert connection != null;
             connection.close();
         }
-        //log.info("getAllAvailableCars() - end");
+        log.info("getAllAvailableCars() - end");
         return listCars;
     }
 
