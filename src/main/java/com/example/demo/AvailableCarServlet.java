@@ -2,25 +2,30 @@ package com.example.demo;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet("/isDeletedServlet")
-public class IsDeletedServlet extends HttpServlet {
-
+@WebServlet("/availableCarServlet")
+public class AvailableCarServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String sid = request.getParameter("id");
-        int id = Integer.parseInt(sid);
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        List<Car> list = null;
         try {
-            CarRepository.isDeleted(id);
+            list = CarRepository.getAllAvailableCars();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        response.sendRedirect("availableCarServlet");
-    }
 
+        for (Car car : list) {
+            out.print(car);
+        }
+        out.close();
+    }
 }
