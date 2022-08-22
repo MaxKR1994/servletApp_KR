@@ -24,7 +24,6 @@ public class SaveServlet extends HttpServlet {
         String model = request.getParameter("model");
         String producingCountry = request.getParameter("producingCountry");
         String bodyType = request.getParameter("bodyType");
-        String isDeletedCar = request.getParameter("isDeletedCar");
 
         Car car = new Car();
 
