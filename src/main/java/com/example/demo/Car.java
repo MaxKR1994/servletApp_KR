@@ -14,7 +14,7 @@ public class Car {
     private String model;
     private String producingCountry;
     private String bodyType;
-    private Boolean isDeletedCar = false;
+    private Boolean isDeletedCar = Boolean.FALSE;
 
     @Override
     public String toString() {
