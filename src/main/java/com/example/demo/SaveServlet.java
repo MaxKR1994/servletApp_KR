@@ -31,7 +31,6 @@ public class SaveServlet extends HttpServlet {
         car.setModel(model);
         car.setProducingCountry(producingCountry);
         car.setBodyType(bodyType);
-        car.setIsDeletedCar(Boolean.valueOf(isDeletedCar));
 
         //out.println(car.toString());
         //out.println(CarRepository.getConnection());
