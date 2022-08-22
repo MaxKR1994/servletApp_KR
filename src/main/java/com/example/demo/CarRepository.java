@@ -132,7 +132,7 @@ public class CarRepository {
             connection = CarRepository.getConnection();
             PreparedStatement ps = connection.prepareStatement("UPDATE wheels " +
                                                                    "SET isdeleted = true" +
-                                                                   "WHERE id = ?\n");
+                                                                   "WHERE id = ?");
             ps.setInt(1, id);
             status = ps.executeUpdate();
 
@@ -155,7 +155,8 @@ public class CarRepository {
         try {
             log.info("getCarById() - start = {}, ID: ", id);
             connection = CarRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("select * from wheels where id=?");
+            PreparedStatement ps = connection.prepareStatement("select * from wheels " +
+                                                                   "where id=? AND isdeleted = TRUE");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -164,6 +165,7 @@ public class CarRepository {
                 car.setModel(rs.getString(3));
                 car.setProducingCountry(rs.getString(4));
                 car.setBodyType(rs.getString(5));
+                car.setIsDeletedCar(Boolean.valueOf(rs.getString(6)));
             }
 
         } catch (SQLException exception) {
