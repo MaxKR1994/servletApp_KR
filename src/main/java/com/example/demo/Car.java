@@ -14,6 +14,7 @@ public class Car {
     private String model;
     private String producingCountry;
     private String bodyType;
+    private Boolean isElectricCar = false;
 
     @Override
     public String toString() {
@@ -23,6 +24,8 @@ public class Car {
                 ", model='" + model + '\'' +
                 ", producingCountry='" + producingCountry + '\'' +
                 ", bodyType='" + bodyType + '\'' +
+                ", isElectricCar=" + isElectricCar +
                 '}';
     }
 }
+
