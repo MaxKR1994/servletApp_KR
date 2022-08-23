@@ -1,4 +1,7 @@
-package com.example.demo;
+package com.example.demo.clientServlets;
+
+import com.example.demo.Car;
+import com.example.demo.CarRepository;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

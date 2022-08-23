@@ -1,4 +1,7 @@
-package com.example.demo;
+package com.example.demo.adminServlets;
+
+import com.example.demo.Car;
+import com.example.demo.CarRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +28,7 @@ public class PutServlet extends HttpServlet {
         String model = request.getParameter("model");
         String producingCountry = request.getParameter("producingCountry");
         String bodyType = request.getParameter("bodyType");
+        Boolean isUsed = Boolean.valueOf(request.getParameter("isUsed"));
 
         Car car = new Car();
         car.setId(id);
@@ -32,6 +36,7 @@ public class PutServlet extends HttpServlet {
         car.setModel(model);
         car.setProducingCountry(producingCountry);
         car.setBodyType(bodyType);
+        car.setIsUsed(isUsed);
 
         int status = 0;
         try {
