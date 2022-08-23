@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.adminServlets;
+
+import com.example.demo.CarRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
