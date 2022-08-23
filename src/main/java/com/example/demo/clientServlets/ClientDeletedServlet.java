@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.clientServlets;
+
+import com.example.demo.CarRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/isDeletedServlet")
-public class IsDeletedServlet extends HttpServlet {
+@WebServlet("/clientDeletedServlet")
+public class ClientDeletedServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
