@@ -32,8 +32,10 @@ public class AuthenticationFilter implements Filter {
         if (session == null && !(uri.endsWith("cars/saveServlet") || uri.endsWith("cars/loginServlet")
                                                                   || uri.endsWith("cars/viewServlet")
                                                                   || uri.endsWith("cars/putServlet")
-                                                                  || uri.endsWith("cars/isDeletedServlet")
-                                                                  || uri.endsWith("cars/availableCarServlet"))) {
+                                                                  || uri.endsWith("cars/clientDeletedServlet")
+                                                                  || uri.endsWith("cars/availableCarServlet")
+                                                                  || uri.endsWith("cars/getNewCarServlet")
+                                                                  || uri.endsWith("cars/getUsedCarServlet"))) {
             this.context.log("<<< Unauthorized access request");
             PrintWriter out = res.getWriter();
             out.println("No access!!!");
