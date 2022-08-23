@@ -12,10 +12,10 @@ import java.util.List;
 @Logged
 public class CarRepository {
 
-    public static void main(String[] args) throws SQLException {
-        getConnection();
-        isDeleted(4);
-    }
+//    public static void main(String[] args) throws SQLException {
+//        getConnection();
+//        isDeleted(4);
+//    }
     @Logged
     public static Connection getConnection() {
 
@@ -45,11 +45,12 @@ public class CarRepository {
         try {
             log.info("Start saving object = {}", car);
             connection = CarRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("insert into wheels(brand,model,producingCountry,bodyType) values (?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into wheels(brand,model,producingCountry,bodyType,isused) values (?,?,?,?,?)");
             ps.setString(1, car.getBrand());
             ps.setString(2, car.getModel());
             ps.setString(3, car.getProducingCountry());
             ps.setString(4, car.getBodyType());
+            ps.setBoolean(5,car.getIsUsed());
             status = ps.executeUpdate();
 
         } catch (SQLException ex) {
@@ -71,13 +72,14 @@ public class CarRepository {
         try {
             log.info("Start updating object = {}", car);
             connection = CarRepository.getConnection();
-            PreparedStatement ps = connection.prepareStatement("update wheels set brand=?,model=?,producingCountry=?,bodyType=? where id=?");
+            PreparedStatement ps = connection.prepareStatement("update wheels set brand=?,model=?,producingCountry=?,bodyType=?,isused=? where id=?");
             ps.setString(1, car.getBrand());
             ps.setString(2, car.getModel());
             ps.setString(3, car.getProducingCountry());
             ps.setString(4, car.getBodyType());
+            ps.setBoolean(5,car.getIsUsed());
 
-            ps.setInt(5, car.getId());
+            ps.setInt(6, car.getId());
 
             status = ps.executeUpdate();
 
@@ -155,6 +157,7 @@ public class CarRepository {
                 car.setModel(rs.getString(3));
                 car.setProducingCountry(rs.getString(4));
                 car.setBodyType(rs.getString(5));
+                car.setIsUsed(rs.getBoolean(6));
             }
 
         } catch (SQLException exception) {
@@ -187,7 +190,8 @@ public class CarRepository {
                 car.setModel(rs.getString(3));
                 car.setProducingCountry(rs.getString(4));
                 car.setBodyType(rs.getString(5));
-                car.setIsDeletedCar(rs.getBoolean(6));
+                car.setIsUsed(rs.getBoolean(6));
+                car.setIsDeletedCar(rs.getBoolean(7));
                 listCars.add(car);
             }
 
@@ -222,7 +226,8 @@ public class CarRepository {
                 car.setModel(rs.getString(3));
                 car.setProducingCountry(rs.getString(4));
                 car.setBodyType(rs.getString(5));
-                car.setIsDeletedCar(rs.getBoolean(6));
+                car.setIsUsed(rs.getBoolean(6));
+                car.setIsDeletedCar(rs.getBoolean(7));
                 listCars.add(car);
             }
 
@@ -233,6 +238,83 @@ public class CarRepository {
             connection.close();
         }
         log.info("getAllAvailableCars() - end");
+        return listCars;
+    }
+
+    @Logged
+    public static List<Car> getNewCar() throws SQLException {
+
+        List<Car> listCars = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            log.info("getAllCars() - start");
+            connection = CarRepository.getConnection();
+            PreparedStatement ps = connection.prepareStatement("select * from wheels WHERE isdeletedcar = FALSE");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Car newCar = new Car();
+
+                newCar.setId(rs.getInt(1));
+                newCar.setBrand(rs.getString(2));
+                newCar.setModel(rs.getString(3));
+                newCar.setProducingCountry(rs.getString(4));
+                newCar.setBodyType(rs.getString(5));
+                newCar.setIsDeletedCar(rs.getBoolean(6));
+                newCar.setIsUsed(rs.getBoolean(7));
+
+                if (!newCar.getIsUsed() && newCar.getIsUsed() != null){
+                    listCars.add(newCar);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            assert connection != null;
+            connection.close();
+        }
+        log.info("getAllCars() - end");
+        return listCars;
+    }
+
+    public static List<Car> getUsedCar() throws SQLException {
+
+        List<Car> listCars = new ArrayList<>();
+
+        Connection connection = null;
+        try {
+            log.info("getAllCars() - start");
+            connection = CarRepository.getConnection();
+            PreparedStatement ps = connection.prepareStatement("select * from wheels WHERE isdeletedcar = FALSE");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Car newCar = new Car();
+
+                newCar.setId(rs.getInt(1));
+                newCar.setBrand(rs.getString(2));
+                newCar.setModel(rs.getString(3));
+                newCar.setProducingCountry(rs.getString(4));
+                newCar.setBodyType(rs.getString(5));
+                newCar.setIsDeletedCar(rs.getBoolean(6));
+                newCar.setIsUsed(rs.getBoolean(7));
+
+                if (newCar.getIsUsed() && newCar.getIsUsed() != null){
+                    listCars.add(newCar);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            assert connection != null;
+            connection.close();
+        }
+        log.info("getAllCars() - end");
         return listCars;
     }
 
