@@ -248,7 +248,7 @@ public class CarRepository {
 
         Connection connection = null;
         try {
-            log.info("getAllCars() - start");
+            log.info("getNewCar() - start");
             connection = CarRepository.getConnection();
             PreparedStatement ps = connection.prepareStatement("select * from wheels WHERE isdeletedcar = FALSE");
             ResultSet rs = ps.executeQuery();
@@ -276,7 +276,7 @@ public class CarRepository {
             assert connection != null;
             connection.close();
         }
-        log.info("getAllCars() - end");
+        log.info("getNewCar() - end");
         return listCars;
     }
 
@@ -286,7 +286,7 @@ public class CarRepository {
 
         Connection connection = null;
         try {
-            log.info("getAllCars() - start");
+            log.info("getUsedCar() - start");
             connection = CarRepository.getConnection();
             PreparedStatement ps = connection.prepareStatement("select * from wheels WHERE isdeletedcar = FALSE");
             ResultSet rs = ps.executeQuery();
@@ -314,7 +314,7 @@ public class CarRepository {
             assert connection != null;
             connection.close();
         }
-        log.info("getAllCars() - end");
+        log.info("getUsedCar() - end");
         return listCars;
     }
 
