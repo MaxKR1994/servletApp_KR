@@ -280,6 +280,7 @@ public class CarRepository {
         return listCars;
     }
 
+    @Logged
     public static List<Car> getUsedCar() throws SQLException {
 
         List<Car> listCars = new ArrayList<>();
